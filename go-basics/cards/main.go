@@ -5,11 +5,14 @@ import "fmt"
 var deckSize int
 
 func main() {
-	card := []string{newCard(), "Ace of Diamonds"}
-
+	cards := []string{newCard(), "Ace of Diamonds"}
+	cards = append(cards, "Six of Spades")
 	deckSize = 55
 	fmt.Println(deckSize)
-	fmt.Println(card)
+	for i, card := range cards {
+		fmt.Println(i, card)
+	}
+
 }
 
 func newCard() string {
