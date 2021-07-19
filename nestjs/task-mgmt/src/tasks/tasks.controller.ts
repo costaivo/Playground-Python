@@ -7,7 +7,7 @@ import { Controller, Get } from '@nestjs/common';
 import { CreateTaskDto } from './dto/create-task.dto';
 import { GetTasksFilterDto } from './dto/get-tasks-filter.dto';
 import { UpdateTaskDto } from './dto/update-task.dto';
-import { Task, TaskStatus } from './task.model';
+import { Task } from './task.entity';
 import { TasksService } from './tasks.service';
 
 @Controller('tasks')
@@ -16,29 +16,29 @@ export class TasksController {
 
     }
 
-    @Get()
-    getTasks(@Query() filterDto: GetTasksFilterDto): Task[] {
-        if (Object.keys(filterDto).length) {
-            return this.taskService.getTasksWithFilters(filterDto);
-        }
-        else
-            return this.taskService.getAllTasks();
-    }
+    // @Get()
+    // getTasks(@Query() filterDto: GetTasksFilterDto): Task[] {
+    //     if (Object.keys(filterDto).length) {
+    //         return this.taskService.getTasksWithFilters(filterDto);
+    //     }
+    //     else
+    //         return this.taskService.getAllTasks();
+    // }
     @Get('/:id')
-    getTask(@Param('id') id: string): Task {
+    async getTask(@Param('id') id: string): Promise<Task> {
         return this.taskService.getTaskById(id);
     }
-    @Delete('/:id')
-    deleteTask(@Param('id') id: string): void {
-        this.taskService.deleteTaskById(id);
-    }
-    @Post()
-    createTask(@Body() createTaskDto: CreateTaskDto): Task {
-        return this.taskService.createTask(createTaskDto);
-    }
-    @Patch('/:id/status')
-    updateTaskStatus(@Param('id') id: string,
-     @Body() updateTaskDto: UpdateTaskDto) : Task {
-        return this.taskService.updateTaskStatus(id, updateTaskDto.status);
-    }
+    // @Delete('/:id')
+    // deleteTask(@Param('id') id: string): void {
+    //     this.taskService.deleteTaskById(id);
+    // }
+    // @Post()
+    // createTask(@Body() createTaskDto: CreateTaskDto): Task {
+    //     return this.taskService.createTask(createTaskDto);
+    // }
+    // @Patch('/:id/status')
+    // updateTaskStatus(@Param('id') id: string,
+    //  @Body() updateTaskDto: UpdateTaskDto) : Task {
+    //     return this.taskService.updateTaskStatus(id, updateTaskDto.status);
+    // }
 }
