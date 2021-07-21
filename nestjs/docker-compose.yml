@@ -1,0 +1,36 @@
+version: '3'
+services:
+  pgdb:
+    container_name: keepfit-postgres
+    image: postgres
+    restart: always
+    environment:
+      - POSTGRES_DB=keepfit
+      - POSTGRES_USER=keepfit
+      - POSTGRES_PASSWORD=keepfit
+    ports:
+      - "5400:5432"
+    expose:
+      - '5411'
+      # Where our data will be persisted
+    volumes:
+      - postgres-db:/var/lib/postgres
+    networks:
+      - postgres
+# Names our volume
+  pgadmin:
+    container_name: keepfit-pgadmin
+    restart: always
+    image: dpage/pgadmin4:latest
+    environment:
+      - PGADMIN_DEFAULT_EMAIL=ivo.costa@creativecapsule.com
+      - PGADMIN_DEFAULT_PASSWORD=keepfit
+    ports:
+      - 8081:80
+    networks:
+      - postgres
+
+volumes:
+  postgres-db:
+networks:
+  postgres:
